@@ -1,0 +1,47 @@
+﻿@page "/Contactus"
+@using Assignment.Shared;
+@inject HttpClient Http
+
+
+<h3>Contact</h3>
+<button @onclick="GetContacts">Get Detail</button>
+@if(contacts==null)
+{
+    <p>Click Button To Show List</p>
+}
+
+else{
+
+    <table class="table">
+        <thead>
+            <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cnt in contacts )
+            {
+                <tr>
+                <td>@cnt. Id </td>
+                <td>@cnt. Name</td>
+                <td>@cnt. Email</td>
+                <td>@cnt. Phone</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    Contact[]? contacts;
+    async void  GetContacts()
+    {
+
+        contacts= await Http.GetFromJsonAsync<Contact[]>("/Contact");
+        StateHasChanged();
+    }
+
+
+}
